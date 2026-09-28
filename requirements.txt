@@ -1,0 +1,7 @@
+# Install Python 3.11 or newer before installing these packages.
+# Install CUDA-enabled PyTorch first using the command in README.md.
+ultralytics==8.3.0
+PyYAML==6.0.2
+matplotlib==3.9.2
+Pillow==10.4.0
+numpy==1.26.4

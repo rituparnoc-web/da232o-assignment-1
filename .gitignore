@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.DS_Store
+.ipynb_checkpoints/
+
+# Downloaded data and generated artifacts
+data/raw/
+data/processed/
+data/downloads/
+data/baseline_sample/
+runs/
+weights/
+kaggle_results/
+submission_package/
+*.pt
+*.pth
+*.zip
+
+# Local logs
+*.log
