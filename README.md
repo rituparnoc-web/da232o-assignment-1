@@ -1,10 +1,10 @@
 # Pascal VOC Object Detection with YOLOv8n Transfer Learning
 
-This project fine-tunes the COCO-pretrained Ultralytics YOLOv8n detector on Pascal VOC 2007 and 2012. It is configured for an NVIDIA T1200 Laptop GPU with 4 GB VRAM, 32 GB system RAM, and an Intel i7-11800H.
+This project fine-tunes the COCO-pretrained Ultralytics YOLOv8n detector on Pascal VOC 2007 and 2012. The local setup was tested on an NVIDIA T1200 Laptop GPU with 4 GB VRAM, 32 GB system RAM, and an Intel i7-11800H.
 
 ## Hardware profile
 
-The default training profile is intentionally conservative:
+These defaults were used to test the training pipeline on the local T1200:
 
 - Model: `yolov8n.pt`
 - Image size: 640
@@ -21,7 +21,7 @@ If CUDA runs out of memory, use `--batch 1` or `--imgsz 512`.
 
 ## Environment setup
 
-Use Python 3.11 or 3.12. Python 2.7 and Python 3.14 are not suitable for the pinned dependency set.
+Use Python 3.11 or 3.12 with the pinned dependencies:
 
 ```powershell
 py -3.11 -m venv .venv
@@ -68,7 +68,7 @@ Run the COCO-pretrained model on the VOC test images for qualitative baseline ex
 python scripts/predict_baseline.py
 ```
 
-This baseline is qualitative by default. It must not be treated as a directly comparable 20-class metric because COCO and Pascal VOC have different class definitions and annotation policies.
+These predictions are for visual inspection. I did not calculate a COCO-to-VOC baseline score because the datasets use different class definitions and annotation policies.
 
 ## Fine-tuning
 
@@ -84,7 +84,7 @@ runs/detect/voc_yolov8n/weights/best.pt
 
 ## Final evaluation
 
-Only run final test evaluation after model selection is complete:
+After choosing a checkpoint using validation results, evaluate it on the held-out test split:
 
 ```powershell
 python scripts/evaluate.py --weights runs/detect/voc_yolov8n/weights/best.pt --data configs/voc.yaml --imgsz 640 --batch 2 --device 0
@@ -94,13 +94,6 @@ The evaluation reports precision, recall, mAP@0.5, and mAP@0.5:0.95. Evaluation 
 
 ## Reproducibility
 
-Record the following in the report:
+The dataset split was generated with seed `42`: VOC 2007 and 2012 `trainval` images were split 90:10 for training and validation, and VOC 2007 `test` was kept for final evaluation. Training began on the local T1200 and continued from that checkpoint for 30 additional epochs on a Kaggle T4, using batch size 8 and image size 640. The Kaggle run used Python 3.12, PyTorch 2.10.0+cu128, and Ultralytics 8.3.0.
 
-- Python, PyTorch, torchvision, Ultralytics, and CUDA versions.
-- GPU model and driver version.
-- The saved train/validation/test image lists.
-- The exact training command and output directory.
-- The selected checkpoint and validation metric.
-- Evaluation settings and result files.
-
-Do not use the VOC 2007 test results to change training or model-selection decisions.
+The selected checkpoint is `kaggle_results/weights/best.pt`. On the held-out test set, it reached mAP@0.5 of `0.791` and mAP@0.5:0.95 of `0.578`. Detailed metrics and plots are in `kaggle_results/eval/` and `kaggle_results/plots/`. The test results were not used to select or adjust the model.

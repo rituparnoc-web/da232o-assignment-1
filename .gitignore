@@ -21,3 +21,8 @@ submission_package/
 
 # Local logs
 *.log
+
+# Local planning drafts
+/PLAN.md
+/PLAN_UPDATED.md
+/PLAN_FINAL.md
