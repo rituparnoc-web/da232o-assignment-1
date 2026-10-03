@@ -120,7 +120,7 @@ Full evaluation artifacts (confusion matrix, PR curves, per-class plots): `kaggl
 
 ### 5.4 Qualitative results
 
-Sample annotated predictions on the test set (4,952 images processed): `kaggle_results/predictions/`.
+Two representative annotated test predictions are included in `kaggle_results/predictions/voc_test_predictions/`. The complete prediction set was generated locally but is not included in Git.
 
 ---
 
@@ -160,7 +160,7 @@ kaggle_results/
   weights/best.pt, last.pt              Final trained model weights
   plots/                                Training curves, confusion matrix, label distribution
   eval/                                 Test-set evaluation results and plots
-  predictions/                          Annotated sample predictions on test images
+  predictions/voc_test_predictions/     Two annotated sample predictions
 requirements.txt                        Local environment dependencies
 README.md                               Setup and reproduction instructions
 PLAN_FINAL.md                           Project plan and methodology decisions
